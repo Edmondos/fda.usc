@@ -12,10 +12,10 @@ fdata.deriv<-function(fdataobj,nderiv=1,method="bspline",class.out='fdata'
  if (method=="diff") {
   res=matrix(NA, nrow=nr, ncol = nc)
   for (i in 1:nr) {
-   a=diff(DATA[i,],differences=nderiv)/(tt[2:nc]-tt[1:(nc-1)])^nderiv
+   a=diff(DATA[i,],differences=nderiv)/(tt[(1+nderiv):nc]-tt[1:(nc-nderiv)])^nderiv
    ab=matrix(NA,ncol=nc,nrow=2)
-   ab[1,2:nc]=a
-   ab[2,1:(nc-1)]=a
+   ab[1,(1+nderiv):nc]=a
+   ab[2,1:(nc-nderiv)]=a
    res[i,]=colMeans(ab,na.rm=TRUE)
   }
   labels$main<-paste("d(",labels$main,",",nderiv,")",sep="")
